@@ -1,4 +1,3 @@
-
 import re,sys
 custlist=[]
 page = -1
@@ -74,19 +73,79 @@ def insertData():
     custlist.append(customer)
     print(custlist)
     global page
-    page += 1
-
+    #page += 1
+    page = len(custlist)-1
+    print(page)  
 
 def curSearch():
-    print(custlist)
+    if page >= 0:
+        print("현재 페이지는 {}쪽 입니다. ".format(page+1))
+        print(custlist[page])
+    else:
+        print("입력된 정보가 없습니다.")
+           
 
-# def preSearch():
+def preSearch():
+    global page
+    if page <= 0:
+        print("첫 번째 페이지이므로 이전 페이지 이동이 불가능합니다.")
+        print(page)
+    else:
+        page -= 1
+        print("현재 페이지는 {}쪽 입니다.".format(page+1))
+        print(custlist[page])
 
-# def nextSearch():
+def nextSearch():
+    global page
+    if page >= len(custlist)-1:
+        print("마지막 페이지이므로 다음 페이지 이동이 불가능합니다.")
+        print(page)
+    else:
+        page += 1
+        print("현재 페이지는 {}쪽 입니다.".format(page+1))
+        print(custlist[page])
 
-# def updateData():
+def updateData():
+    global page
+    while True:
+        choice1=input("수정하시려는 고객 정보의 이메일을 입력하세요 : ")
+        idx=-1
+        for i in range(0,len(custlist)):
+            if custlist[i]['email'] == choice1:
+                idx = i
+                break
+        if idx == -1:
+            print("등로되지 않은 이메일 입니다. ")
+            break
+        choice2 = input('''
+            다음 중 수정하실 정보를 골라주세요.
+                name, sex, birthyear )
+            (수정할 정보가 없으면 'exit' 입력)
+            ''')
+        if choice2 in ('name','sex','birthyear'):
+            custlist[idx][choice2]=input('수정할 {}을 입력하세요.'.format(choice2))
+            break
+        elif choice2 == 'exit':
+            break
+        else:
+            print("존재하지 않는 정보입니다.")
+            break
 
-# def deleteData():
+
+def deleteData():
+    global page
+    choice1 = input("삭제하려는 고객 정보의 이메일을 입력하세요.")
+    delok = 0
+    for i in range(0,len(custlist)):
+        if custlist[i]['email']==choice1:
+             print("{} 고객님의 정보가 삭제 되었습니다.".format(custlist[i]['name']))
+             del custlist[i]
+             print(custlist) # 이 부분은 실제 프로그램에서는 삭제 해야 함. 
+             delok = 1
+        if delok == 1:
+            break     
+    if delok == 0:
+        print("등록되지 않은 이메일 입니다.")
 
 def quit():
     print("프로그램 종료")
@@ -103,5 +162,6 @@ while True:
     U - 고객 정보 수정
     D - 고객 정보 삭제
     Q - 프로그램 종료
-    ''')  
+    ''') .upper()
     exe(choice)
+
