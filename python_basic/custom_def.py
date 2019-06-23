@@ -77,7 +77,8 @@ def insertData():
     page += 1
 
 
-# def curSearch():
+def curSearch():
+    print(custlist)
 
 # def preSearch():
 
