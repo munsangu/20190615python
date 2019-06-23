@@ -1,5 +1,5 @@
 
-import re
+import re,sys
 custlist=[]
 page = -1
 
@@ -75,6 +75,22 @@ def insertData():
     print(custlist)
     global page
     page += 1
+
+
+# def curSearch():
+
+# def preSearch():
+
+# def nextSearch():
+
+# def updateData():
+
+# def deleteData():
+
+def quit():
+    print("프로그램 종료")
+    sys.exit()
+
 
 while True:
     choice=input('''
