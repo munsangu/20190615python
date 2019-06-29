@@ -4,6 +4,10 @@ class Customer:
     custlist=[]
     page = -1
 
+    def quit(self):
+        print("프로그램 종료")
+        sys.exit()
+
     def firstinput(self):
         choice=input('''
                 다음 중에서 하실 일을 골라주세요 :
@@ -133,10 +137,6 @@ class Customer:
         if delok == 0:
             print("등록되지 않은 이메일 입니다.")
     
-    def quit(self):
-        print("프로그램 종료")
-        sys.exit()
-
     def exe(self,choice):
         if choice=='I':
             self.insertData()
