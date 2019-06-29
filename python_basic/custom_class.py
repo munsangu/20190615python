@@ -1,4 +1,4 @@
-import re, sys
+import re, sys, pickle, os, json
 
 class Customer:
     custlist=[]
@@ -6,7 +6,25 @@ class Customer:
 
     def quit(self):
         print("프로그램 종료")
+        self.saveData()
         sys.exit()
+
+    def saveData(self):
+        with open("./python_basic/data.json","wt") as f:
+           json.dump(self.custlist,f,indent=4)
+           
+    def loadData(self):
+        # 파일 크기가 0보다 클 경우에 읽어옴.
+        # if os.path.getsize("./python_basic/data.pickle")>0:
+        # 파일이 존재할 경우에 읽어옴.
+        if os.path.exists("./python_basic/data.pickle"):
+            with open("./python_basic/data.pickle","rb") as f:
+                self.custlist=json.load(f)
+
+    def fullSearch(self):
+        print(" - 전체 고객 리스트 - ")
+        for i in self.custlist:
+            print(i)
 
     def firstinput(self):
         choice=input('''
@@ -15,8 +33,10 @@ class Customer:
                 C - 현재 고객 정보 조회
                 P - 이전 고객 정보 조회
                 N - 다음 고객 정보 조회
+                F - 전체 고객 정보 조회
                 U - 고객 정보 수정
                 D - 고객 정보 삭제
+                S - 저장 
                 Q - 프로그램 종료
                 ''') .upper()
         return choice
@@ -149,11 +169,16 @@ class Customer:
         elif choice=='U':
             self.updateData()        
         elif choice=='D':
-            self.deleteData()        
+            self.deleteData()
+        elif choice=='S':
+            self.saveData()
+        elif choice=='F':
+            self.fullSearch()          
         elif choice=='Q':
             self.quit()
 
     def __init__(self):
+        self.loadData()
         while True:
             self.exe(self.firstinput())   
 
