@@ -1,4 +1,4 @@
-import re
+import re, sys
 
 class Customer:
     custlist=[]
@@ -132,6 +132,10 @@ class Customer:
                 break     
         if delok == 0:
             print("등록되지 않은 이메일 입니다.")
+    
+    def quit(self):
+        print("프로그램 종료")
+        sys.exit()
 
     def exe(self,choice):
         if choice=='I':
@@ -147,7 +151,7 @@ class Customer:
         elif choice=='D':
             self.deleteData()        
         elif choice=='Q':
-            quit()
+            self.quit()
 
     def __init__(self):
         while True:
