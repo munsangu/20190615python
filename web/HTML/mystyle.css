@@ -1,0 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Nanum+Pen+Script&display=swap');
+
+body{font-size: 25pt;font-family: 'Nanum Pen Script', cursive;}
+#p1 {background-color: skyblue}
+a:hover{color: tan}
+/* 주석 */
