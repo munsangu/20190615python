@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+        <!-- <h1>--------------------------------------------</h1> -->
+    <head>
+        <meta charset="UTF-8">
+        <title>자바스크립트 연습</title>
+        <script>
+             function calc(){
+                var x = document.getElementById("x").value;
+                var y = document.getElementById("y").value;
+                sum = parseInt(x)+parseInt(y);
+                document.getElementById("sum").value=sum;
+            }
+        </script>
+        <!-- <h1>--------------------------------------------</h1> -->
+        <script type="text/javascript">
+            function gugu(){
+                var dan = document.getElementById("dan").value;
+                var str = "";
+                for(var i=1;i<=9;i++){
+                    str += dan + "x" + i + "=" + dan*i +"<br>";
+                }
+                document.getElementById("result").innerHTML = str;
+                
+            }
+        </script>
+        <!-- <h1>--------------------------------------------</h1> -->
+         <script>
+                var myWindow;
+    
+                function openWin(){
+                    myWindow = window.open("","myWindow","width=200, height=100");
+                    myWindow = document.write("<p>This is 'myWindow'</p>");
+                }
+                function closeWin(){
+                    myWindow.close();
+                }
+        </script>
+        <!-- <h1>--------------------------------------------</h1> -->
+        <script type="text/javascript"> 
+            function mouseIn(elem){
+                elem.style.border = "2px solid red";
+                elem.style.fontSize="30px";
+            }
+            function mouseOut(elem){
+                elem.style.border="2px solid blue";
+                elem.style.fontSize="16px";
+            }
+         </script>
+         <!-- <h1>--------------------------------------------</h1> -->
+    </head>
+    <body>
+        <h1>--------------------------------------------</h1>
+        <input type="text" id="dan" value="3" size="5">
+        <input type="button" value="확인"   onclick="gugu()">
+        <div id="result"> innerHTML 영역</div>
+        <h1>--------------------------------------------</h1>
+        <form name="myform" method="POST">
+            첫번째 정수: <input type="text" id="x" value="100"><br>
+            두번째 정수: <input type="text" id="y"><br>
+            합계의 정수: <input id = "sum"><br>
+            <input type = "button" value="계산" onclick="calc()">
+        </form>
+        <h1>--------------------------------------------</h1>
+        <h1 id="test" style="color: blue; background-color: purple;">This is a heading</h1>
+        
+        <script>
+            function func(){
+                var e = document.getElementById("test");
+                e.style.color="red";
+                e.style.backgroundColor = "yellow";
+            }
+        </script>
+        
+        <button onclick="func()">Click!</button>
+        <h1>--------------------------------------------</h1>
+        <input type="button" value="Click to here!" onclick="alert('ok')">
+        <button onclick="alert('hello')">버튼을 누르세요</button>
+        <br>
+        <script src="js_test.js"></script>
+        <br>
+        <h1>--------------------------------------------</h1>
+        <script>
+           
+            var s;
+            s=100;
+            document.write(s+"<br>");
+            document.write(typeof(s)+"<br>");
+            s="홍길동";
+            document.write(s+"<br>");
+            document.write(typeof(s)+"<br>");
+            var c = prompt("내용을 입력하세요");
+            document.write(c);
+            var user = confirm("당신의 이름은" + c);
+            if(user==true){
+                document.write("<br>"+"확인"+"<br>");
+                document.write(user+"<br>");
+            }else{
+                document.write("취소"+"<br>");
+                document.write(user+"<br>");
+            }
+            
+        </script>
+        <h1>--------------------------------------------</h1>
+        <script>
+            var fruits = new Array();
+            fruits['a']="사과";
+            fruits['b']="바나나";
+            fruits['c']="오렌지";
+            for(var f in fruits){
+                document.write(fruits[f]+"<br>");
+            }
+            document.write(fruits["a"]+"<br>");
+            document.write(fruits["b"]+"<br>");
+            document.write(fruits["c"]+"<br>");
+        </script>
+        <h1>--------------------------------------------</h1>
+        <button onclick="openWin()">Open "myWindow"</button>
+        <button onclick="closeWin()">Close "myWindow"</button>
+        <h1>--------------------------------------------</h1>
+        <div style="background-color: lightblue"
+        onmouseover="mouseIn(this)" onmouseout="mouseOut(this)">마우스이벤트</div>
+        <h1>--------------------------------------------</h1>
+        <h1 id="title">마우스 이벤트</h1>
+        <a href="#" id="btn"><img src="../img/2.jpg"></a>
+        <p id="img_src"></p>
+        <script>
+            var btn = document.getElementById("btn");
+            var s = document.getElementById("img_src");
+            btn.onmouseover = function(){
+                document.getElementById("title").innerHTML = "마우스오버";
+                btn.firstChild.src="../img/2.jpg";
+                s.innerHTML = btn.firstChild.src;
+            }
+            btn.onmouseout = function(){
+                document.getElementById("title").innerHTML = "마우스아웃";
+                btn.firstChild.src="../img/3.jpg";
+                s.innerHTML = btn.firstChild.src;
+            }
+        </script>
+        <h1>--------------------------------------------</h1>
+        <script type="text/javascript">
+            var movie = prompt("좋아하는 영화를 입력하세요","아이언맨");
+            var message = "";
+            var img="";
+            switch(movie){
+            case "아이언맨":
+                message="아이언맨을 좋아하시네요";
+                img = "7.jpg";
+                break;
+            case "캡틴아메리카":
+                message="캡틴아메리카를 좋아하시네요";
+                img="5.jpg";
+                break;
+            case "토르":
+                message="토르를 좋아하시네요";
+                img="4.jpg";
+                break;
+            case "캡틴마블":
+                message="캡틴마블을 좋아하시네요";
+                img="21.jpg";
+                break;
+            default:
+                alert("영화를 잘못입력했습니다.(아이언맨, 캡틴아메리카, 토르, 캡틴 마블 중 하나를 입력해주세요)");           
+            }
+            document.write("<h2>"+message+"</h2>");
+            document.write("<img src='images/"+img +"'");
+        </script>
+    </body>
+</html>
