@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <!-- <title> 객체 조작 메소드 html()</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+                $(function(){
+                   $("h2").html("<a href='#'>HTML 메서드</a>");
+                   alert($("h1").html());
+                });
+            </script> -->
+        <!-- <value get/set> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            $(function(){
+                var val = $("#user_name").val();
+                $("#my_name").val(val);
+                var copy = $("#user_name").clone();
+                $(copy).insertAfter("#user_name");
+                $("#my_name").css("color","red");
+            })
+        </script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            $(function(){
+                $("#btn1").mouseover(function(){
+                    $("p").css("background-color","yellow");
+                });
+                $("#btn1").mouseout(function(){
+                    $("p").css("background-color","purple");
+                });
+                $("#btn2").hover(function(){
+                    $("p").css("background-color","red");
+                },function(){
+                    $("p").css("background-color","blue");
+                });
+            });
+        </script>
+    </head>
+    
+    <body>
+        <!-- <객체 조각 및 생성
+        <h1>객체 조작 및 생성</h1>
+        <h2><em>html()</em></h2> -->
+        <!-- <value get/set> -->
+        <!-- <P>
+            <input type="text" name="user_name" id="user_name" value="홍길동">
+        </P>
+        <P>
+            <input type="text" name="my_name" id="my_name">
+        </P> -->
+        <button id="btn1">mouseover/out</button>
+        <button id="btn2">hover</button>
+        <p>내용</p>
+    </body>
+</html>

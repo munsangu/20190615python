@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title> 인접선택자</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+                $(function(){
+                   $(".one").parent().css("border","2px solid green");
+                   $("#first").children().css("background-color","yellow");
+                   $(".one").next().css("border","5px solid red");
+                   $(".one").prev().css("border","5px solid blue");
+                   $(".two").siblings().css("background-color","pink");
+                });
+            </script>
+    </head>
+    <body>
+        <h1>자바 프로그렴 영역</h1>
+        <ul>
+            <li>
+                <ul id="first">
+                    <li>자바</li>
+                    <li class="one">JSP</li>
+                    <li class="two">안드로이드</li>
+                    <li class="three">스프링</li>
+                </ul>
+            </li>
+        </ul>
+    </body>
+</html>
