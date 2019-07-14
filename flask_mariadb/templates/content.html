@@ -1,0 +1,29 @@
+{% extends 'default.html' %}
+{% block title %}
+  개인 정보 
+{% endblock %}
+
+{% block contents %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">아이디</th>
+      <th scope="col">이메일</th>
+      <th scope="col">주소</th>
+      <th scope="col">비밀번호</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td>{{user['userid']}}</td>
+      <td>{{user['email']}}</td>
+      <td>{{user['address']}}</td>
+      <td>{{user['password']}}</td>
+    </tr>
+  </tbody>
+</table>
+<button type="button" class="btn btn-primary" onclick="location.href='/delete/{{user.userid}}'">삭제</button>
+<button type="button" class="btn btn-danger" onclick="location.href='/updateform/{{user.userid}}'">수정</button>
+{% endblock %}
