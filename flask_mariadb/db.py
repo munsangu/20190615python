@@ -65,14 +65,15 @@ def delete_user(userid):
 # 데이터 수정 함수
 def update_user(user):
     conn=conn_db()
-    c=conn.cursor()
-    sql = '''update users
+    cursor=conn.cursor()
+    print(user)
+    sql='''update users 
             set email=%s,
                 address=%s,
                 password=%s
             where userid=%s
-          '''
-    c.execute(sql,(user['email'],user['address'],user['password'],user['userid']))
+        '''
+    cursor.execute(sql,(user['email'],user['address'],user['password'],user['userid']))
     conn.commit()
     conn.close()
     

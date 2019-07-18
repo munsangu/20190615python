@@ -6,6 +6,10 @@ db.create_table()
 
 @app.route('/')
 def index():
+    return redirect('/list')
+
+@app.route('/insertform')
+def insertform():
     return render_template('main.html')
 
 @app.route('/insert',methods=['POST'])
@@ -34,7 +38,7 @@ def updataform(userid):
         user=db.one_user(userid)
         return render_template('updateform.html',user=user)
 
-@app.route('/update/<userid>', methods=['POST'])
+@app.route('/update', methods=['POST'])
 def update_user():
     user = request.form.to_dict()
     db.update_user(user)
