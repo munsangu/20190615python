@@ -1,5 +1,6 @@
 import urllib.request
 from bs4 import BeautifulSoup
+import json
 
 params = urllib.parse.urlencode({'page':1})
 url = 'https://movie.naver.com/movie/point/af/list.nhn?&%s'%params
@@ -29,3 +30,6 @@ for i,r in enumerate(table.find_all('tr')):
         pass
 
 print(list_records)
+
+with open('crawling/movie.json','wt') as f:
+    json.dump(list_records,f)
