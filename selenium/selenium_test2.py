@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
-import time
+import requests, time
 
 driver=webdriver.Chrome('selenium/data/chromedriver')
 driver.get('https://www.istarbucks.co.kr/store/store_map.do')
