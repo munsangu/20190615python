@@ -36,4 +36,3 @@ with open('movie.csv', 'w', newline='',encoding='utf-8') as csvfile:
             pass
     writer.writerows(list_records)
 print(list_records)
-
