@@ -45,4 +45,4 @@ def update_user():
     return redirect('/list')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

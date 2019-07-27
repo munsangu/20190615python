@@ -13,4 +13,4 @@ def login():
         return render_template('form_result.html',result=result)    
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run()

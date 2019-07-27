@@ -23,7 +23,7 @@ for n in range(0, len(list)) :
     # 예매율(숫자 출력이 안됨...)
     reservation = list[n].find(class_="num").find_all("dl")
     print("예매율 :\t", reservation,"%")
-    # 개요(태그 내 텍스트만 출력 안됨...)
+    # 개요(태그 내 텍스트만 출력 안됨)
     genre=list[n].find(class_="link_txt").find_all("a")
     print("개요 :\t",genre)
     # 상영시간(태그 내 텍스트로 작성되어 있음)
