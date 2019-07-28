@@ -16,6 +16,27 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from PIL import Image
 
+tmrvl=[]
+url="https://movie.naver.com/movie/running/current.nhn"
+response = urllib.request.urlopen(url)
+soup=BeautifulSoup(response,'html.parser')
+table=soup.select('dt.tit a')
+for result3 in table:
+        mtitle=str(result3.string)
+        mcode=str(result3.attrs['href'])
+        i = str(re.findall('\d+', mcode)[0])
+        tmcode=tuple([i])
+        tmtitle=tuple([mtitle])
+        tmrvl.append(tmtitle+tmcode)
+conn=pymysql.connect(host='127.0.0.1',user='root',password='qwer1234',db='movie',charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
+c=conn.cursor()
+#마리아 db에 넣을댸는 ??가아니고 %s로 써야됨
+sql="INSERT IGNORE INTO test(title,codem) VALUES(%s,%s)"
+c.executemany(sql, tmrvl)
+conn.commit()
+conn.close()
+#-------
+
 app=Flask(__name__) #초기화해서 app에 주소값 넣음
 
 #메인화면
@@ -150,7 +171,7 @@ def detail(m_no,current_movie_title):
         nouns = noun_extractor.extract()
     
         # 이미지 파일위에 출력하기
-        img = Image.open('IT_Bank_Movie/static/img/cloud.png')
+        img = Image.open('Movie_project/Movie/static/img/cloud.png')
         img_array=np.array(img)
 
         wordcloud = WordCloud( font_path = '/Library/Fonts/NanumBarunGothic.ttf', 
@@ -162,7 +183,7 @@ def detail(m_no,current_movie_title):
         plt.imshow(wordcloud)
         plt.axis("off")
         #plt.show()  
-        url1="IT_Bank_Movie/static/wordcloud/" + current_movie_title + ".png"
+        url1="Movie_project/Movie/static/wordcloud/" + current_movie_title + ".png"
         wordcloud.to_file(url1)
     
 
@@ -336,7 +357,7 @@ def formresult():
                 #Show_movie_genre.append(movieGenre.text)
         
         #영화 이미지 추출
-        movieImgs = soup.select("div span img")
+        movieImgs = soup.select("div span img.img_g")
             
         for movieImg in movieImgs:
             Show_movie_img.append(movieImg['src'])
