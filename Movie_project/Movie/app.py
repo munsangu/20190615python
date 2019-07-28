@@ -235,7 +235,7 @@ def formresult():
             else:
                 movie_genre.append(movieGenre.text)
         #영화 이미지 추출
-        movieImgs = soup.select("div span img")
+        movieImgs = soup.select("div span img.img_g")
         
         for movieImg in movieImgs:
             movie_img.append(movieImg['src'])
