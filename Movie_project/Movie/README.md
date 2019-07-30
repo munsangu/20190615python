@@ -1,4 +1,4 @@
-# kgitbank_bigdata
+# Movie_project
 > 1. os : windows 10
 > 2. 아나콘다 (python 3.65)
 > 3. git, github
