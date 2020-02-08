@@ -1,0 +1,6 @@
+num1 =int(input("첫 번째 수 : "))
+num2 =int(input("두 번째 수 : "))
+print("%d ** %d = %d"%(num1,num2,num1**num2))
+print("%d // %d = %d"%(num1,num2,num1//num2))
+print("%d / %d = %.2f"%(num1,num2,num1/num2))
+print("%d %% %d = %d"%(num1,num2,num1%num2))

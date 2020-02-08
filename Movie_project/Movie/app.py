@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 from selenium import webdriver as wd
 import time,re
-#영화 코드넣기
+# 映画コード入り
 import sys
 import urllib.request,json, time
 import pandas as pd
@@ -30,17 +30,17 @@ for result3 in table:
         tmrvl.append(tmtitle+tmcode)
 conn=pymysql.connect(host='127.0.0.1',user='root',password='qwer1234',db='movie',charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
 c=conn.cursor()
-#마리아 db에 넣을댸는 ??가아니고 %s로 써야됨
+# Maria dbに入れる時には??ではなく%sで書く。
 sql="INSERT IGNORE INTO test(title,codem) VALUES(%s,%s)"
 c.executemany(sql, tmrvl)
 conn.commit()
 conn.close()
 #-------
 
-app=Flask(__name__) #초기화해서 app에 주소값 넣음
+app=Flask(__name__) #初期化してappアドレス入力
 
-#메인화면
-@app.route('/moviemain') #주소임
+# メーン画面
+@app.route('/moviemain') #住所
 def mainmovie():
     conn=pymysql.connect(host='127.0.0.1',
     user='root',
@@ -57,7 +57,7 @@ def mainmovie():
         conn.close()
     return render_template('main.html',movieList=result)
 
-#상영예정영화
+# 上映予定の映画
 @app.route('/Future_movie')
 def to_be_movie():
     conn=pymysql.connect(host='127.0.0.1',
@@ -75,8 +75,8 @@ def to_be_movie():
         conn.close()
     return render_template('Future_movie.html',to_be_movieList=result)
 
-#ajax검색
-@app.route('/ajaxmain',methods=['POST'])#주소임
+# ajax検索
+@app.route('/ajaxmain',methods=['POST'])# 住所
 def searchmovie():
     text=request.form.get('text')
     stype=request.form.get('stype')
@@ -92,27 +92,27 @@ def searchmovie():
                 sql='select * from current_movie where current_movie_open like %s'
                 text='%'+text+'%'
                 cursor.execute(sql,text)
-                movieList=cursor.fetchall()# 다가져올떄
+                movieList=cursor.fetchall()# 全部持って来る時
                 print(movieList)
                 
             elif stype == 'current_movie_genre':
                 sql='select * from current_movie where current_movie_genre like %s'
                 text='%'+text+'%'
                 cursor.execute(sql,text)
-                movieList=cursor.fetchall()# 다가져올떄
+                movieList=cursor.fetchall()# 全部持って来る時
                 print(movieList)
             else:
                 sql='select * from current_movie where current_movie_title like %s'
                 text='%'+text+'%'
                 cursor.execute(sql,text)
-                movieList=cursor.fetchall()# 다가져올떄
+                movieList=cursor.fetchall()# 全部持って来る時
                 print(movieList)
     finally:
         conn.close()
         return jsonify(movieList)
 
-#영화상세
-@app.route('/movie_detail/<m_no>/<current_movie_title>')#주소임
+#映画詳細
+@app.route('/movie_detail/<m_no>/<current_movie_title>')#住所
 def detail(m_no,current_movie_title):    
     conn=pymysql.connect(host='127.0.0.1',
     user='root',
@@ -124,11 +124,11 @@ def detail(m_no,current_movie_title):
         with conn.cursor() as cursor:
             sql='select * from current_movie c inner join test t on c.current_movie_title = t.title where current_movie_title = %s;'
             cursor.execute(sql,(current_movie_title))
-            result=cursor.fetchone() #하나만 가져올때
+            result=cursor.fetchone() #一つだけ持って来る時
 
             sql='select * from current_movie where current_movie_title = %s;'
             cursor.execute(sql,(current_movie_title))
-            result1=cursor.fetchone() #하나만 가져올때
+            result1=cursor.fetchone() #一つだけ持って来る時
 
             sql='select * from board where m_no= %s;'
             cursor.execute(sql,(m_no))
@@ -154,7 +154,7 @@ def detail(m_no,current_movie_title):
         df=pd.DataFrame(tmrvl)
 
         def preprocessing(text):
-            # 개행문자 제거
+            # 改行文字除去
             text = re.sub('\\\\n', ' ', text)
             return text
         
@@ -165,12 +165,12 @@ def detail(m_no,current_movie_title):
 
         sentences = df[0].apply(preprocessing)
 
-        # soynlp로 명사 추출하기
+        # soynlp로 名詞抽出法
         noun_extractor = LRNounExtractor(verbose=True)
         noun_extractor.train(sentences)
         nouns = noun_extractor.extract()
     
-        # 이미지 파일위에 출력하기
+        # イメージファイルの上に出力する
         img = Image.open('Movie_project/Movie/static/img/cloud.png')
         img_array=np.array(img)
 
@@ -189,8 +189,8 @@ def detail(m_no,current_movie_title):
 
     return render_template('movie_detail.html', wordInfo=result, board=board, movieInfo=result1)
 
-#상영예정영화상세
-@app.route('/show_movie_detail/<m_no>')#주소임
+#上映予定映画詳細
+@app.route('/show_movie_detail/<m_no>')#住所
 def show_movie_detail(m_no):
     conn=pymysql.connect(host='127.0.0.1',
     user='root',
@@ -202,7 +202,7 @@ def show_movie_detail(m_no):
         with conn.cursor() as cursor:
             sql='select * from movie_to_be_screened where m_no= %s;'
             cursor.execute(sql,(m_no))
-            result=cursor.fetchone() #하나만 가져올떄
+            result=cursor.fetchone() #一つだけ持って来る時
 
             sql='select * from board where m_no= %s;'
             cursor.execute(sql,(m_no))
@@ -216,23 +216,23 @@ def show_movie_detail(m_no):
 def formTest():
     return render_template('form.html')#form.html을 호출하겟다
 '''
-#현재영화등록
+#現在映画登録
 @app.route('/')
 def formresult():
     
     driver = wd.Chrome(executable_path='Movie_project/Movie/data/chromedriver')
 
-    #영화목록 가지고오기
+    #映画リストをお持ち帰り
 
-    movie_title = [] #영화제목
-    movie_genre = [] #영화연령
-    movie_img = []  #영화포스터
+    movie_title = [] #映画のタイトル
+    movie_genre = [] #映画年齢
+    movie_img = []  #映画のポスター
     movie_img_Processing =[] #영화포스터주소(가공후)
-    #movie_score = [] #영화평점
+    #movie_score = [] #映画評点
     movie_open = [] #영화오픈날짜
-    movie_story = [] #영화줄거리
+    movie_story = [] #映画のあらすじ
 
-    #페이지에 있는 영화제목 출력
+    #ページにある映画のタイトルを出力
     for movie_page in range(1,4):
         #print("https://movie.daum.net/premovie/released?opt=reserve&page=",movie_page)    
         url = "https://movie.daum.net/premovie/released?opt=reserve&page={}".format(movie_page)
@@ -241,13 +241,13 @@ def formresult():
 
         soup = BeautifulSoup(html,'html.parser')
         
-        #영화 타이틀 추출.
+        #映画のタイトル抽出
         movietitles = soup.find_all('a',class_='name_movie #title')
         
         for movietitle in movietitles:
             movie_title.append(movietitle.text)
         
-        #영화 연령 추출
+        #映画年齢抽出
         movieGenres = soup.find_all('em',class_='ico_movie')
         
         for movieGenre in movieGenres:
@@ -255,21 +255,21 @@ def formresult():
                 continue
             else:
                 movie_genre.append(movieGenre.text)
-        #영화 이미지 추출
+        #映画のイメージ抽出
         movieImgs = soup.select("div span img.img_g")
         
         for movieImg in movieImgs:
             movie_img.append(movieImg['src'])
             # time.sleep(3)
-        #영화 평점 추출
+        #映画評点抽出
         #movieScores = soup.find_all('span',class_='num_grade')
         #for moiveScore in movieScores:
             #print(moiveScore.text)
 
-        #영화개봉날짜 추출
+        #映画公開日の抽出
         movieOpens = soup.find_all('span',class_='info_state')
 
-        #영화개봉날짜 정규표현씩 활용하여 추출.
+        #映画公開日の正規表現を活用して抽出
         for movieOpen in movieOpens:
             movieOpen_cleand = re.sub('[a-zA-Z]' , '', movieOpen.text)
             movieOpen_cleand = re.sub('[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]',
@@ -282,24 +282,24 @@ def formresult():
             movieStory_cleand = movieStory.text.strip()
             movieStroy_cleand_final = movieStory_cleand.replace("\n","")
             movie_story.append(movieStroy_cleand_final)        
-    #영화이미지주소 가공
+    #映画の画像アドレス加工
     for moviesoso in range(len(movie_img)):
         movie_img_Processing.append(movie_img[moviesoso].replace("//img1.daumcdn.net/thumb/C236x340/?fname=","")) 
 
 
-    #리스트안에 영화제목이 들어가졌나 확인
+    #リストの中に映画のタイトルが入っているか確認。
     #print(len(movie_title))
 
-    #리스트안에 영화연령이 들어가졌나 확인
+    #リストの中に映画年齢が入っているか確認
     #print(len(movie_genre))
 
-    #리스트안에 영화이미지가 들어가졌나 확인
+    #リストの中に映画のイメージが入っているか確認。
     #print(movie_img)
 
-    #리스트안에 영화개봉날짜 들어가졌나 확인
+    #リストの中に映画の公開日が入っているか確認
     #print(len(movie_open))
 
-    #리스트안에 스토리 들어가졌나 확인
+    #リストの中にストーリーが入っているか確認。
     #print(len(movie_story))
 
     conn=pymysql.connect(host='127.0.0.1',
@@ -309,7 +309,7 @@ def formresult():
     charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor)
 
-    #데이터삭제 및 등록
+    #データの削除·登録
     try:
         with conn.cursor() as cursor:
             sql="delete from current_movie"
@@ -323,17 +323,17 @@ def formresult():
         conn.close()
 
     
-    #######상영예정 영화목록 가지고오기##############
+    #######上映予定の映画リストをお持ち帰り##############
 
-    Show_movie_title = [] #상영예정 영화제목
-    #Show_movie_genre = [] #상영예정 영화등급
-    Show_movie_img = []  #상영예정 영화포스터
-    Show_movie_img_Processing =[] #상영예정 영화포스터주소(가공후)
-    #movie_score = [] #상영예정 영화평점
-    Show_movie_open = [] #상영예정 영화오픈날짜
-    Show_movie_story = [] #상영예정 영화줄거리
+    Show_movie_title = [] #上映予定映画のタイトル
+    #Show_movie_genre = [] #上映予定の映画等級
+    Show_movie_img = []  #上映予定の映画ポスター
+    Show_movie_img_Processing =[] #上映予定映画のポスターアドレス(架空後)
+    #movie_score = [] #上映予定の映画評点
+    Show_movie_open = [] #上映予定映画のオープンの日時
+    Show_movie_story = [] #上映予定映画のあらすじ
 
-    #페이지에 있는 영화제목 출력
+    #ページにある映画のタイトルを出力
     for movie_page in range(1,6):
         #print("https://movie.daum.net/premovie/released?opt=reserve&page=",movie_page)    
         url = "https://movie.daum.net/premovie/scheduled?opt=reserve&page={}".format(movie_page)
@@ -342,13 +342,13 @@ def formresult():
 
         soup = BeautifulSoup(html,'html.parser')
         
-        #영화 타이틀 추출.
+        #映画のタイトル抽出
         movietitles = soup.find_all('a',class_='name_movie #title')
         
         for movietitle in movietitles:
             Show_movie_title.append(movietitle.text)
         
-        #영화 연령 추출
+        #映画年齢抽出
         #movieGenres = soup.find_all('em',class_='ico_movie')    
         #for movieGenre in movieGenres:
             #if movieGenre.text == "독점":
@@ -356,21 +356,21 @@ def formresult():
             #else:
                 #Show_movie_genre.append(movieGenre.text)
         
-        #영화 이미지 추출
+        #映画のイメージ抽出
         movieImgs = soup.select("div span img.img_g")
             
         for movieImg in movieImgs:
             Show_movie_img.append(movieImg['src'])
 
-        #영화 평점 추출
+        #映画評点抽出
         #movieScores = soup.find_all('span',class_='num_grade')
         #for moiveScore in movieScores:
             #print(moiveScore.text)
 
-        #영화개봉날짜 추출
+        #映画公開日の抽出
         movieOpens = soup.find_all('span',class_='info_state')
 
-        #영화개봉날짜 정규표현씩 활용하여 추출.
+        #映画公開日の正規表現を活用して抽出
         for movieOpen in movieOpens:
             movieOpen_cleand = re.sub('[a-zA-Z]' , '', movieOpen.text)
             movieOpen_cleand = re.sub('[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]',
@@ -384,7 +384,7 @@ def formresult():
             movieStroy_cleand_final = movieStory_cleand.replace("\n","")
             Show_movie_story.append(movieStroy_cleand_final)
     driver.close()        
-    #영화이미지주소 가공
+    #映画の画像アドレス加工
     for moviesoso in range(len(Show_movie_img)):
         Show_movie_img_Processing.append(Show_movie_img[moviesoso].replace("//img1.daumcdn.net/thumb/C236x340/?fname=","")) 
 
@@ -395,7 +395,7 @@ def formresult():
     charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor)
 
-    #데이터삭제 및 등록
+    #データの削除·登録
     try:
         with conn.cursor() as cursor:
             sql="delete from movie_to_be_screened"
@@ -408,24 +408,24 @@ def formresult():
     finally:
         conn.close()   
     return redirect('/moviemain')
-    #리스트안에 영화제목이 들어가졌나 확인
+    #リストの中に映画のタイトルが入っているか確認
     #print(Show_movie_title)
 
-    #리스트안에 영화연령이 들어가졌나 확인
+    #リストの中に映画年齢が入っているか確認
     #print(Show_movie_genre)
 
-    #리스트안에 영화이미지가 들어가졌나 확인
+    #リストの中に映画のイメージが入っているか確認。
     #print(Show_movie_img)
 
-    #리스트안에 영화개봉날짜 들어가졌나 확인
+    #リストの中に映画の公開日が入っているか確認
     #print(Show_movie_open)
 
-    #리스트안에 스토리 들어가졌나 확인
+    #リストの中にストーリーが入っているか確認。
     #print(Show_movie_story[0])
 
     
 
-#영화삭제하기
+#映画削除
 '''@app.route('/delete_movie/<m_no>',methods=['GET'])
 def deleteform(m_no):
     conn=pymysql.connect(host='127.0.0.1',user='root',password='qwer1234',db='movie',charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
@@ -441,7 +441,7 @@ def deleteform(m_no):
 
         return redirect('/moviemain')'''
 
-#영화내용 수정하기
+#映画内容の修正
 '''@app.route('/update_movie/<m_no>',methods=['GET'])
 def updateform(m_no):
     conn=pymysql.connect(host='127.0.0.1',user='root',password='qwer1234',db='movie',charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
@@ -456,7 +456,7 @@ def updateform(m_no):
         conn.close()
 
         return render_template('update_movie.html',list=result)'''
-#영화수정
+#映画内容の修正
 '''@app.route('/update_movie',methods=['POST'])
 def updateformp():
     conn=pymysql.connect(host='127.0.0.1',user='root',password='qwer1234',db='movie',charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
@@ -480,10 +480,10 @@ def updateformp():
         conn.close()
     return redirect('/moviemain')'''
 
-#게시판글쓰기
+#掲示板の書き込み
 @app.route('/board_write/<m_no>',methods=['GET'])
 def boardW(m_no):
-    return render_template('board_write.html',m_no=m_no)#form.html을 호출하겟다
+    return render_template('board_write.html',m_no=m_no)#form.html
 
 @app.route('/board_write/<m_no>',methods=['POST'])
 def boardP(m_no):
@@ -508,7 +508,7 @@ def boardP(m_no):
         conn.close()
     return redirect('/movie_detail/'+m_no)
 
-#글내용
+#文の内容
 @app.route('/board_content/<b_no>',methods=['GET'])
 def boardC(b_no):
     conn=pymysql.connect(host='127.0.0.1',user='root',password='qwer1234',db='movie',charset='utf8mb4',cursorclass=pymysql.cursors.DictCursor)
@@ -522,6 +522,6 @@ def boardC(b_no):
         conn.close()
     return render_template('board_content.html',list=result)
 
-if __name__=="__main__": #파일내에서만 직접적으로 동작하게끔
+if __name__=="__main__": #ファイル内でのみダイレクトに動作
     app.run()
-#host0.0.0.0은 외부에서도 접근가능, port는 기본 5000으로 바꾸고 싶으면 바꾸면됨
+#host0.0.0.0は外部でもアクセス可能、portは基本5000に変えたいなら変えればなる

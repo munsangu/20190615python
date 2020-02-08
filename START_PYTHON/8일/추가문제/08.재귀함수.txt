@@ -1,0 +1,16 @@
+def Recursive(n):
+    if n == 0:
+        return
+    Recursive(n - 1)
+    print(n)
+#recursive : 재귀, 반복
+#리눅스 배우신분들 -r -> 재귀
+Recursive(3)
+
+
+def Factorial(n):
+    if(n == 0):
+        return 1
+    return n * Factorial(n-1)
+num = int(input("정수 입력 : "))
+print("%d의 factorial : %d"%(num,Factorial(num)))
